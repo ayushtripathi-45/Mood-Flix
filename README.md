@@ -7,10 +7,10 @@
 
 <br>
 
-<img src="https://img.shields.io/github/stars/yourusername/moodflix?style=for-the-badge&color=ff4d6d">
-<img src="https://img.shields.io/github/forks/yourusername/moodflix?style=for-the-badge&color=7b2cbf">
-<img src="https://img.shields.io/github/issues/yourusername/moodflix?style=for-the-badge&color=4361ee">
-<img src="https://img.shields.io/github/license/yourusername/moodflix?style=for-the-badge&color=06d6a0">
+<img src="https://img.shields.io/github/stars/ayushtripathi-45/mood-flix?style=for-the-badge&color=ff4d6d">
+<img src="https://img.shields.io/github/forks/ayushtripathi-45/mood-flix?style=for-the-badge&color=7b2cbf">
+<img src="https://img.shields.io/github/issues/ayushtripathi-45/mood-flix?style=for-the-badge&color=4361ee">
+<img src="https://img.shields.io/github/license/ayushtripathi-45/mood-flix?style=for-the-badge&color=06d6a0">
 
 <br><br>
 
