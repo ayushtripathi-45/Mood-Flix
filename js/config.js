@@ -1,7 +1,7 @@
 export const CONFIG = {
-  TMDB_KEY: "79ca66437a250298d1acb497fa316ad3",
-  OMDB_KEY: "d2a9039e",
-  LASTFM_KEY: "76fbff7693dd9204a73401f06f659f97",
+  TMDB_KEY: "YOUR_KEY",
+  OMDB_KEY: "YOUR_KEY",
+  LASTFM_KEY: "YOUR_KEY",
   TMDB_BASE: "https://api.themoviedb.org/3",
   TMDB_IMG: "https://image.tmdb.org/t/p/w500",
   OMDB_BASE: "https://www.omdbapi.com",
