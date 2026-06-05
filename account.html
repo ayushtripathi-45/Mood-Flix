@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account - MoodFlix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/account.css">
+</head>
+<body>
+  <main class="account-page">
+    <div class="account-shell">
+      <section class="auth-card" id="auth-container">
+        <h2>Login / Signup</h2>
+        <div class="auth-tabs">
+          <button type="button" class="active" id="login-tab">Login</button>
+          <button type="button" id="signup-tab">Signup</button>
+        </div>
+        <form class="auth-form" onsubmit="return false;">
+          <input type="email" id="email" placeholder="Email" autocomplete="email">
+          <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+          <div class="btn-row">
+            <button type="button" class="btn-primary" id="auth-submit">Login</button>
+            <button type="button" class="btn-secondary" id="google-btn">Sign in with Google</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="profile-card" id="profile-container" style="display:none;">
+        <h2>Your Account</h2>
+        <p id="profile-status" class="muted">Signed in account dashboard.</p>
+        <div class="btn-row" style="margin-top:1rem;">
+          <button type="button" class="btn-secondary" id="logout-btn">Logout</button>
+        </div>
+        <div id="watchlist-grid" class="watchlist-grid"></div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module">
+    import { handleAuth, handleGoogleLogin, handleLogout } from './js/auth.js';
+    import { injectNavbar, injectFooter } from './js/main.js';
+
+    let loginMode = true;
+    const authSubmit = document.getElementById("auth-submit");
+    const loginTab = document.getElementById("login-tab");
+    const signupTab = document.getElementById("signup-tab");
+
+    window.handleAuth = handleAuth;
+    document.getElementById("google-btn").onclick = handleGoogleLogin;
+    document.getElementById("logout-btn").onclick = handleLogout;
+
+    function setMode(isLogin) {
+      loginMode = isLogin;
+      authSubmit.textContent = isLogin ? "Login" : "Create Account";
+      loginTab.classList.toggle("active", isLogin);
+      signupTab.classList.toggle("active", !isLogin);
+    }
+
+    authSubmit.onclick = () => handleAuth(loginMode);
+    loginTab.onclick = () => setMode(true);
+    signupTab.onclick = () => setMode(false);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      injectNavbar();
+      injectFooter();
+    });
+  </script>
+</body>
+</html>

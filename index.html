@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoodFlix - Your Mood, Your Vibe, Your Picks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Your mood. Your vibe.<br><span class="glow-text">Your picks.</span></h1>
+      <p>Answer a few interactive questions to find movies, shows, and music matched to your psychological wavelength.</p>
+      <a href="try-now.html" class="btn-primary">Find My Vibe -></a>
+    </div>
+  </header>
+
+  <section class="trending-section">
+    <h2>Live Trending Movies</h2>
+    <div id="trending-scroll" class="horizontal-scroll"></div>
+  </section>
+
+  <section class="preview-section">
+    <div class="section-head">
+      <h2>Movie Preview Wall</h2>
+      <p>Click any poster to see origin, cast, runtime, IMDb rating, and story details.</p>
+    </div>
+    <div id="movie-preview-grid" class="preview-grid"></div>
+  </section>
+
+  <section class="preview-section">
+    <div class="section-head">
+      <h2>Song Preview Wall</h2>
+      <p>Tracks are loaded from LastFM. Open a card for artist and album details.</p>
+    </div>
+    <div id="song-preview-grid" class="preview-grid"></div>
+  </section>
+
+  <section class="mood-tiles-section">
+    <h2>Quick Select a Vibe</h2>
+    <div class="mood-grid">
+      <div class="mood-tile" data-mood="happy">Happy</div>
+      <div class="mood-tile" data-mood="sad">Sad</div>
+      <div class="mood-tile" data-mood="chill">Chill</div>
+      <div class="mood-tile" data-mood="romantic">Romantic</div>
+      <div class="mood-tile" data-mood="thriller">Thriller</div>
+      <div class="mood-tile" data-mood="focused">Focused</div>
+    </div>
+  </section>
+
+  <div id="chatbot-root"></div>
+  <div id="detail-modal" class="detail-modal hidden" aria-hidden="true">
+    <div class="detail-modal-backdrop" data-close-modal></div>
+    <div class="detail-modal-card">
+      <button class="detail-close" data-close-modal type="button">x</button>
+      <div id="detail-modal-body"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { injectNavbar, injectFooter } from './js/main.js';
+    import { fetchTrending, getFallbackPoster } from './js/tmdb.js';
+    import { fetchOmdbDetails } from './js/omdb.js';
+    import { fetchFeaturedTracks } from './js/music.js';
+    import { CONFIG } from './js/config.js';
+
+    const moviePreviewGrid = document.getElementById("movie-preview-grid");
+    const songPreviewGrid = document.getElementById("song-preview-grid");
+    const trendingContainer = document.getElementById("trending-scroll");
+    const modal = document.getElementById("detail-modal");
+    const modalBody = document.getElementById("detail-modal-body");
+
+    window.__apiStatus = { tmdb: "pending", omdb: "pending", lastfm: "pending" };
+
+    function posterFor(item) {
+      return item.poster_path ? `${CONFIG.TMDB_IMG}${item.poster_path}` : getFallbackPoster(item.title || item.name);
+    }
+
+    function escapeAttr(value = "") {
+      return String(value).replaceAll("&", "&amp;").replaceAll("\"", "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    }
+
+    function getOrigin(item, omdb) {
+      if (omdb?.Country?.toLowerCase().includes("india")) return "Bollywood";
+      if (item.origin) return item.origin;
+      if (item.original_language === "hi") return "Bollywood";
+      if (item.original_language === "en") return "Hollywood";
+      return item.original_language ? item.original_language.toUpperCase() : "Unknown";
+    }
+
+    async function enrichMovie(item) {
+      const year = (item.release_date || "").slice(0, 4);
+      const omdb = await fetchOmdbDetails(item.title, year);
+      if (omdb) window.__apiStatus.omdb = "ok";
+      return {
+        ...item,
+        origin: getOrigin(item, omdb),
+        runtime: omdb?.Runtime && omdb.Runtime !== "N/A" ? omdb.Runtime : item.runtime,
+        rating: omdb?.imdbRating && omdb.imdbRating !== "N/A" ? omdb.imdbRating : item.rating,
+        cast: omdb?.Actors && omdb.Actors !== "N/A" ? omdb.Actors : item.cast,
+        overview: omdb?.Plot && omdb.Plot !== "N/A" ? omdb.Plot : item.overview,
+        rated: omdb?.Rated || "Not rated",
+        genre: omdb?.Genre || "Genre unavailable"
+      };
+    }
+
+    function openModal(html) {
+      modalBody.innerHTML = html;
+      modal.classList.remove("hidden");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeModal() {
+      modal.classList.add("hidden");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    document.addEventListener("click", (e) => {
+      if (e.target.matches("[data-close-modal]")) closeModal();
+    });
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      injectNavbar();
+      injectFooter();
+
+      const rawMovies = await fetchTrending();
+      window.__apiStatus.tmdb = rawMovies.some(movie => movie._source === "tmdb") ? "ok" : "fallback";
+      const movies = await Promise.all(rawMovies.map(enrichMovie));
+      if (window.__apiStatus.omdb === "pending") window.__apiStatus.omdb = "fallback";
+
+      trendingContainer.innerHTML = movies.map(item => `
+        <article class="trend-card preview-card" data-title="${escapeAttr(item.title)}">
+          <img src="${posterFor(item)}" alt="${escapeAttr(item.title)}" loading="lazy">
+          <p>${item.title}</p>
+        </article>
+      `).join("");
+
+      moviePreviewGrid.innerHTML = movies.map(item => `
+        <article class="preview-card clickable-card" data-type="movie"
+          data-title="${escapeAttr(item.title)}"
+          data-origin="${escapeAttr(item.origin)}"
+          data-runtime="${escapeAttr(item.runtime)}"
+          data-rating="${escapeAttr(item.rating)}"
+          data-cast="${escapeAttr(item.cast)}"
+          data-genre="${escapeAttr(item.genre)}"
+          data-rated="${escapeAttr(item.rated)}"
+          data-overview="${escapeAttr(item.overview)}">
+          <img src="${posterFor(item)}" alt="${escapeAttr(item.title)}" loading="lazy">
+          <div class="preview-card-body">
+            <h3>${item.title}</h3>
+            <p>${item.origin} | ${item.runtime} | IMDb ${item.rating}</p>
+          </div>
+        </article>
+      `).join("");
+
+      const tracks = await fetchFeaturedTracks();
+      window.__apiStatus.lastfm = tracks.some(track => track._source === "lastfm") ? "ok" : "fallback";
+      songPreviewGrid.innerHTML = tracks.map(track => `
+        <article class="preview-card clickable-card" data-type="song"
+          data-title="${escapeAttr(track.name)}"
+          data-artist="${escapeAttr(track.artist.name)}"
+          data-album="${escapeAttr(track.album)}"
+          data-overview="Loaded from ${escapeAttr(track._source || "music API")}">
+          <img src="${track.cover || `https://via.placeholder.com/500x500.png?text=${encodeURIComponent(track.name)}`}" alt="${escapeAttr(track.name)}" loading="lazy">
+          <div class="preview-card-body">
+            <h3>${track.name}</h3>
+            <p>${track.artist.name} | ${track.album}</p>
+          </div>
+        </article>
+      `).join("");
+
+      document.querySelectorAll(".mood-tile").forEach(tile => {
+        tile.onclick = () => {
+          localStorage.setItem("shortcut_mood", tile.dataset.mood);
+          window.location.href = "try-now.html";
+        };
+      });
+
+      document.addEventListener("click", (e) => {
+        const card = e.target.closest(".clickable-card");
+        if (!card) return;
+
+        if (card.dataset.type === "movie") {
+          openModal(`
+            <div class="detail-hero">
+              <h2>${card.dataset.title}</h2>
+              <p>${card.dataset.origin}</p>
+            </div>
+            <div class="detail-grid">
+              <div><span>Runtime</span><strong>${card.dataset.runtime}</strong></div>
+              <div><span>IMDb</span><strong>${card.dataset.rating}</strong></div>
+              <div><span>Genre</span><strong>${card.dataset.genre}</strong></div>
+              <div><span>Rated</span><strong>${card.dataset.rated}</strong></div>
+              <div><span>Cast</span><strong>${card.dataset.cast}</strong></div>
+            </div>
+            <p class="detail-overview">${card.dataset.overview}</p>
+          `);
+        } else {
+          openModal(`
+            <div class="detail-hero">
+              <h2>${card.dataset.title}</h2>
+              <p>${card.dataset.artist}</p>
+            </div>
+            <div class="detail-grid">
+              <div><span>Album</span><strong>${card.dataset.album}</strong></div>
+              <div><span>Type</span><strong>Song</strong></div>
+              <div><span>Artist</span><strong>${card.dataset.artist}</strong></div>
+            </div>
+            <p class="detail-overview">${card.dataset.overview}</p>
+          `);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

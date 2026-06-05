@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Vibe | MoodFlix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/try-now.css">
+</head>
+<body>
+  <main class="vibe-page">
+    <section id="intro-panel" class="intro-panel glass-card">
+      <p class="eyebrow">Welcome to MoodFlix</p>
+      <h1>Answer a few questions and get movies and songs matched to your mood.</h1>
+      <p class="intro-copy">
+        Start the quiz, sign in or create your account, and then we’ll suggest content based on your selections.
+      </p>
+      <button id="start-quiz-btn" class="hero-cta" type="button">Start Quiz</button>
+    </section>
+
+    <section id="auth-gate" class="auth-gate glass-card hidden">
+      <div class="auth-gate-copy">
+        <p class="eyebrow">Before you begin</p>
+        <h2>Login or sign up first</h2>
+        <p>We use your account to save recommendations and keep your watchlist ready for later.</p>
+      </div>
+
+      <div class="auth-switcher">
+        <div class="auth-tabs">
+          <button type="button" class="active" id="login-tab">Login</button>
+          <button type="button" id="signup-tab">Signup</button>
+        </div>
+        <div class="auth-form">
+          <div class="field-group signup-only">
+            <label for="signup-name">Name</label>
+            <input type="text" id="signup-name" placeholder="Your name" autocomplete="name">
+          </div>
+          <div class="field-group signup-only">
+            <label for="signup-username">Username</label>
+            <input type="text" id="signup-username" placeholder="Choose a username" autocomplete="nickname">
+          </div>
+          <div class="field-group signup-only">
+            <label for="signup-userid">Email ID</label>
+            <input type="email" id="signup-userid" placeholder="Enter your email ID" autocomplete="email">
+          </div>
+          <div class="field-group login-only">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Email" autocomplete="email">
+          </div>
+          <div class="field-group login-only">
+            <label for="password">Create Password</label>
+            <input type="password" id="password" placeholder="Create password" autocomplete="current-password">
+          </div>
+          <div class="field-group signup-only">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" placeholder="Confirm password" autocomplete="new-password">
+          </div>
+          <div class="auth-actions">
+            <button type="button" id="auth-submit" class="btn-primary">Login</button>
+            <button type="button" id="google-btn" class="btn-secondary">Sign in with Google</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz-area" class="quiz-area hidden">
+      <div id="quiz-wrapper" class="glass-card">
+        <div class="progress-bar-container"><div id="progress" class="progress-fill"></div></div>
+        <h2 id="question-text">Initializing parameters...</h2>
+        <div id="options-grid"></div>
+      </div>
+
+      <div id="loader-wrapper" class="hidden">
+        <div class="mood-spinner"></div>
+        <h3 id="loader-text">Analyzing user profile vectors...</h3>
+      </div>
+
+      <div id="results-wrapper" class="hidden">
+        <div class="results-header glass-card">
+          <h2>Your Emotional Vector: <span id="detected-mood-label" class="glow-text">None</span></h2>
+          <p class="results-copy">Based on your answers, we’ll recommend movies, web series, and music tailored to your vibe.</p>
+        </div>
+        <div class="tabs-container">
+          <button class="tab-btn active" data-tab="movies">🎬 Movies</button>
+          <button class="tab-btn" data-tab="series">📺 Web Series</button>
+          <button class="tab-btn" data-tab="songs">🎵 Music</button>
+        </div>
+        <div id="movies-tab" class="tab-panel active-panel"><div class="results-grid" id="movies-grid"></div></div>
+        <div id="series-tab" class="tab-panel"><div class="results-grid" id="series-grid"></div></div>
+        <div id="songs-tab" class="tab-panel"><div class="results-grid" id="songs-grid"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="chatbot-root"></div>
+
+  <script type="module" src="js/quiz.js"></script>
+  <script type="module" src="js/recommender.js"></script>
+  <script type="module">
+    import { injectNavbar, injectFooter } from './js/main.js';
+    import { handleAuth, handleGoogleLogin } from './js/auth.js';
+
+    let loginMode = true;
+    const introPanel = document.getElementById('intro-panel');
+    const authGate = document.getElementById('auth-gate');
+    const quizArea = document.getElementById('quiz-area');
+    const authSubmit = document.getElementById('auth-submit');
+    const loginTab = document.getElementById('login-tab');
+    const signupTab = document.getElementById('signup-tab');
+
+    function setMode(isLogin) {
+      loginMode = isLogin;
+      authSubmit.textContent = isLogin ? 'Login' : 'Create Account';
+      loginTab.classList.toggle('active', isLogin);
+      signupTab.classList.toggle('active', !isLogin);
+      authGate.classList.toggle('login-mode', isLogin);
+      authGate.classList.toggle('signup-mode', !isLogin);
+    }
+
+    window.showQuizGate = () => {
+      introPanel.classList.add('hidden');
+      authGate.classList.remove('hidden');
+      quizArea.classList.add('hidden');
+      setMode(true);
+    };
+
+    window.startQuizAfterAuth = () => {
+      authGate.classList.add('hidden');
+      quizArea.classList.remove('hidden');
+      if (window.startQuizEngine) window.startQuizEngine();
+    };
+
+    authSubmit.onclick = () => handleAuth(loginMode);
+    document.getElementById('google-btn').onclick = handleGoogleLogin;
+    loginTab.onclick = () => setMode(true);
+    signupTab.onclick = () => setMode(false);
+    document.getElementById('start-quiz-btn').onclick = () => window.showQuizGate();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      injectNavbar();
+      injectFooter();
+    });
+  </script>
+</body>
+</html>

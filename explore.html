@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore - MoodFlix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/explore.css">
+</head>
+<body>
+  <main class="explore-main">
+    <section class="explore-hero">
+      <h1>Explore Your Emotional Spectrum</h1>
+      <p>MoodFlix maps your mood to a curated media journey using tone, pacing, genre, and emotional intensity. The result feels personal, cinematic, and easy to browse.</p>
+    </section>
+
+    <section class="explore-section">
+      <h2>How It Works</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>1. Mood Discovery</h3>
+          <p>You answer a quick quiz so the app understands whether you want comfort, energy, focus, romance, or suspense.</p>
+        </div>
+        <div class="feature-card">
+          <h3>2. Media Matching</h3>
+          <p>We translate your answers into movie, series, and music suggestions designed to fit your current vibe.</p>
+        </div>
+        <div class="feature-card">
+          <h3>3. Save Your Picks</h3>
+          <p>Put your favorite titles into your account watchlist and return to them whenever the mood comes back.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="explore-section">
+      <h2>What You Can Discover</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>Curated Movies</h3>
+          <p>Bold, comforting, emotional, and high-energy films matched to your current selection.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Web Series</h3>
+          <p>Shows with the right pacing and mood depth, from light watches to immersive marathons.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Music Previews</h3>
+          <p>Quick listening recommendations that support the atmosphere you chose in the quiz.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { injectNavbar, injectFooter } from './js/main.js';
+    document.addEventListener("DOMContentLoaded", () => {
+      injectNavbar();
+      injectFooter();
+    });
+  </script>
+</body>
+</html>
