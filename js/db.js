@@ -27,45 +27,53 @@ export async function saveToWatchlist(title, posterUrl, mediaType) {
 
 export async function fetchAndRenderWatchlist() {
   const user = auth.currentUser;
-  const grid = document.getElementById("watchlist-grid");
-  if (!user || !grid) return;
+  const moviesGrid = document.getElementById("movies-watchlist-grid");
+  const seriesGrid = document.getElementById("series-watchlist-grid");
+  if (!user) return;
 
-  grid.innerHTML = '<p>Loading...</p>';
+  if (moviesGrid) moviesGrid.innerHTML = '<p>Loading...</p>';
+  if (seriesGrid) seriesGrid.innerHTML = '<p>Loading...</p>';
 
   try {
     const watchlistRef = ref(db, 'watchlists/' + user.uid);
     const snapshot = await get(watchlistRef);
     
     if (!snapshot.exists()) {
-      grid.innerHTML = '<p>Watchlist is empty.</p>';
+      if (moviesGrid) moviesGrid.innerHTML = '<p>No favourite movies.</p>';
+      if (seriesGrid) seriesGrid.innerHTML = '<p>No favourite web series.</p>';
       return;
     }
 
-    grid.innerHTML = '';
     const data = snapshot.val();
+    if (moviesGrid) moviesGrid.innerHTML = '';
+    if (seriesGrid) seriesGrid.innerHTML = '';
     
-    // ... baaki code same rahega
-Object.keys(data).forEach((key) => {
-  const item = data[key];
-  const div = document.createElement("div");
-  div.className = "watchlist-item glass-card";
-  
-  // Image load na ho toh fallback image dikhane ke liye
-  div.innerHTML = `
-    <img src="${item.poster || 'placeholder.jpg'}" alt="${item.title}" style="width:100%; height:200px; object-fit:cover;">
-    <p>${item.title}</p>
-    <button class="btn-primary" data-key="${key}">Remove</button>
-  `;
-  // ... baaki code
+    Object.keys(data).forEach((key) => {
+      const item = data[key];
+      const div = document.createElement("div");
+      div.className = "watchlist-item glass-card";
+      
+      div.innerHTML = `
+        <img src="${item.poster || 'placeholder.jpg'}" alt="${item.title}" style="width:100%; height:200px; object-fit:cover;">
+        <p>${item.title}</p>
+        <button class="btn-primary" data-key="${key}">Remove</button>
+      `;
       
       div.querySelector("button").onclick = async () => {
         await remove(ref(db, `watchlists/${user.uid}/${key}`));
         div.remove();
         showToast("Removed.", "success");
       };
-      grid.appendChild(div);
+      
+      const type = (item.type || "").toLowerCase();
+      if (type.includes("movie")) {
+        if (moviesGrid) moviesGrid.appendChild(div);
+      } else if (type.includes("tv")) {
+        if (seriesGrid) seriesGrid.appendChild(div);
+      }
     });
   } catch (e) {
-    grid.innerHTML = '<p>Error loading.</p>';
+    if (moviesGrid) moviesGrid.innerHTML = '<p>Error loading.</p>';
+    if (seriesGrid) seriesGrid.innerHTML = '<p>Error loading.</p>';
   }
 }

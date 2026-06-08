@@ -41,15 +41,13 @@ export function injectFooter() {
         <strong>MoodFlix</strong>
         <p>Discover movies, series, and music based on mood.</p>
       </div>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="explore.html">Explore</a>
-        <a href="try-now.html">Find Vibe</a>
-          <a href="account.html">Account</a>
-          <a href="developer.html">Developer</a>
-        <a href="developer.html">Developer</a>
-      </div>
-      <p class="footer-credit">&copy; 2026 MoodFlix. Developed by Me.</p>
+       <div class="footer-links">
+         <a href="index.html">Home</a>
+         <a href="explore.html">Explore</a>
+         <a href="try-now.html">Find Vibe</a>
+         <a href="account.html">Account</a>
+       </div>
+       <p class="footer-credit">&copy; 2026 MoodFlix. Developed by : Ayush Tripathi<br>B.Tech Computer Science Undegrad</p>
     </div>`;
   document.body.appendChild(footer);
 }
