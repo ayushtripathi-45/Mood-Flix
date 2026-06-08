@@ -26,7 +26,7 @@
 
 ### 🌐 Live Demo
 
-## 🔗 [Experience MoodFlix](https://movie-flix-a6cff.web.app/)
+## 🔗 [Experience MoodFlix](https://movie-flix-a6cff.web.app)
 
 <br>
 
