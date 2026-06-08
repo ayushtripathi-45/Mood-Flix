@@ -4,7 +4,7 @@ export function injectNavbar() {
   const nav = document.createElement("nav");
   nav.id = "site-navbar";
   nav.innerHTML = `
-    <div class="logo">MoodFlix</div>
+    <a href="index.html" class="logo">MoodFlix</a>
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="explore.html">Explore</a>
