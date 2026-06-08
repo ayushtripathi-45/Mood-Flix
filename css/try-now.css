@@ -367,12 +367,31 @@
   cursor: pointer;
 }
 
-.track-link {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--accent-blue);
-  text-decoration: underline;
-}
+    .track-link {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--accent-blue);
+      text-decoration: underline;
+    }
+
+    /* Password field styling */
+    .password-field {
+      display: flex;
+      align-items: center;
+    }
+    .password-field input {
+      flex: 1;
+    }
+    .password-field .pw-toggle {
+      margin-left: 0.5rem;
+      padding: 0.2rem 0.5rem;
+      background: var(--glass-border);
+      border: none;
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 0.9rem;
+      border-radius: 4px;
+    }
 
 @media (max-width: 900px) {
   .auth-gate { grid-template-columns: 1fr; }

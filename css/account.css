@@ -106,7 +106,8 @@
 
 /* Profile details styling */
 #profile-name,
-#profile-email {
+#profile-email,
+#profile-username {
   margin: 0.4rem 0;
   font-weight: 500;
   color: var(--text-primary);

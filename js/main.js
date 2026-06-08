@@ -69,6 +69,19 @@ export function showToast(message, type = "success") {
   }, 2500);
 }
 
+export function enablePasswordToggles() {
+  document.querySelectorAll('.pw-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const input = document.getElementById(targetId);
+      if (!input) return;
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      btn.textContent = isPassword ? 'Hide' : 'Show';
+    });
+  });
+}
+
 function updateThemeIcon(theme) {
   const icon = document.querySelector("#theme-toggle .theme-icon");
   if (icon) icon.textContent = theme === "dark" ? "◐" : "◑";
@@ -77,3 +90,4 @@ function updateThemeIcon(theme) {
 window.injectNavbar = injectNavbar;
 window.injectFooter = injectFooter;
 window.showToast = showToast;
+window.enablePasswordToggles = enablePasswordToggles;

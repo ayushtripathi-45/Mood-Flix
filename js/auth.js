@@ -15,28 +15,28 @@ const provider = new GoogleAuthProvider();
 
 // Login / Signup Logic
 export const handleAuth = (isLogin = true) => {
-  const name = document.getElementById("signup-name")?.value?.trim() || "";
-  const username = document.getElementById("signup-username")?.value?.trim() || "";
-  const userId = document.getElementById("signup-userid")?.value?.trim() || "";
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const confirmPassword = document.getElementById("confirm-password")?.value || "";
-
   if (isLogin) {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => showToast("Logged in successfully!", "success"))
-      .catch((err) => showToast(friendlyAuthError(err), "error"));
-  } else {
-    if (!name || !username || !userId) {
-      showToast("Please fill Name, Username, and Email ID.", "error");
+    const email = document.getElementById('email')?.value?.trim() || '';
+    const password = document.getElementById('password')?.value || '';
+    if (!email || !password) {
+      showToast('Please fill Email and Password.', 'error');
       return;
     }
-    if (!username || !userId) {
-      showToast("Please enter Username and User ID / Email.", "error");
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => showToast('Logged in successfully!', 'success'))
+      .catch((err) => showToast(friendlyAuthError(err), 'error'));
+  } else {
+    const name = document.getElementById('signup-name')?.value?.trim() || '';
+    const username = document.getElementById('signup-username')?.value?.trim() || '';
+    const email = document.getElementById('signup-userid')?.value?.trim() || '';
+    const password = document.getElementById('signup-password')?.value || '';
+    const confirmPassword = document.getElementById('confirm-password')?.value || '';
+    if (!name || !username || !email || !password) {
+      showToast('Please fill Name, Username, Email ID, and Password.', 'error');
       return;
     }
     if (password !== confirmPassword) {
-      showToast("Passwords do not match.", "error");
+      showToast('Passwords do not match.', 'error');
       return;
     }
     createUserWithEmailAndPassword(auth, email, password)
@@ -44,9 +44,11 @@ export const handleAuth = (isLogin = true) => {
         try {
           await updateProfile(user, { displayName: username });
         } catch {}
-        showToast("Account created!", "success");
+        // Store name for later display on dashboard
+        localStorage.setItem(`userName_${user.uid}`, name);
+        showToast('Account created!', 'success');
       })
-      .catch((err) => showToast(friendlyAuthError(err), "error"));
+      .catch((err) => showToast(friendlyAuthError(err), 'error'));
   }
 };
 
@@ -67,8 +69,13 @@ onAuthStateChanged(auth, (user) => {
     if(profileContainer) profileContainer.style.display = "block";
     fetchAndRenderWatchlist();
     const nameEl = document.getElementById('profile-name');
+    const usernameEl = document.getElementById('profile-username');
     const emailEl = document.getElementById('profile-email');
-    if (nameEl) nameEl.textContent = user.displayName ? `Name: ${user.displayName}` : '';
+    if (nameEl) {
+      const storedName = localStorage.getItem(`userName_${user.uid}`);
+      nameEl.textContent = storedName ? `Name: ${storedName}` : '';
+    }
+    if (usernameEl) usernameEl.textContent = user.displayName ? `Username: ${user.displayName}` : '';
     if (emailEl) emailEl.textContent = `Email: ${user.email || user.uid}`;
     if (typeof window.startQuizAfterAuth === "function") {
       window.startQuizAfterAuth();
