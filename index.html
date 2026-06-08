@@ -187,7 +187,7 @@
           openModal(`
             <div class="detail-hero">
               <h2>${card.dataset.title}</h2>
-              <p>${card.dataset.origin}</p>
+              <p>${card.dataset.origin || ''}</p>
             </div>
             <div class="detail-grid">
               <div><span>Runtime</span><strong>${card.dataset.runtime}</strong></div>
@@ -195,8 +195,22 @@
               <div><span>Genre</span><strong>${card.dataset.genre}</strong></div>
               <div><span>Rated</span><strong>${card.dataset.rated}</strong></div>
               <div><span>Cast</span><strong>${card.dataset.cast}</strong></div>
+              <div><span>Revenue</span><strong>${card.dataset.revenue || 'N/A'}</strong></div>
+              ${card.dataset.trailer ? `<div><a href="${card.dataset.trailer}" target="_blank">Watch Trailer</a></div>` : ''}
             </div>
             <p class="detail-overview">${card.dataset.overview}</p>
+          `);
+        } else if (card.dataset.type === "series") {
+          openModal(`
+            <div class="detail-hero">
+              <h2>${card.dataset.title}</h2>
+            </div>
+            <div class="detail-grid">
+              <div><span>Year</span><strong>${card.dataset.year}</strong></div>
+              <div><span>Runtime</span><strong>${card.dataset.runtime}</strong></div>
+              <div><span>Revenue</span><strong>${card.dataset.revenue || 'N/A'}</strong></div>
+              ${card.dataset.trailer ? `<div><a href="${card.dataset.trailer}" target="_blank">Watch Trailer</a></div>` : ''}
+            </div>
           `);
         } else {
           openModal(`
@@ -208,6 +222,7 @@
               <div><span>Album</span><strong>${card.dataset.album}</strong></div>
               <div><span>Type</span><strong>Song</strong></div>
               <div><span>Artist</span><strong>${card.dataset.artist}</strong></div>
+              ${card.dataset.trailer ? `<div><a href="${card.dataset.trailer}" target="_blank">Listen to Trailer</a></div>` : ''}
             </div>
             <p class="detail-overview">${card.dataset.overview}</p>
           `);

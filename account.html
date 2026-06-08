@@ -12,21 +12,54 @@
 <body>
   <main class="account-page">
     <div class="account-shell">
-      <section class="auth-card" id="auth-container">
-        <h2>Login / Signup</h2>
-        <div class="auth-tabs">
-          <button type="button" class="active" id="login-tab">Login</button>
-          <button type="button" id="signup-tab">Signup</button>
+<section class="auth-gate glass-card" id="auth-container">
+  <div class="auth-switcher">
+    <div class="auth-tabs">
+      <button type="button" class="active" id="login-tab">Login</button>
+      <button type="button" id="signup-tab">Signup</button>
+    </div>
+    <div class="auth-form">
+      <div class="field-group signup-only">
+        <label for="signup-name">Name</label>
+        <input type="text" id="signup-name" placeholder="Your name" autocomplete="name">
+      </div>
+      <div class="field-group signup-only">
+        <label for="signup-username">Username</label>
+        <input type="text" id="signup-username" placeholder="Choose a username" autocomplete="nickname">
+      </div>
+      <div class="field-group signup-only">
+        <label for="signup-userid">Email ID</label>
+        <input type="email" id="signup-userid" placeholder="Enter your email ID" autocomplete="email">
+      </div>
+      <div class="field-group signup-only">
+        <label for="signup-password">Create Password</label>
+        <div class="password-field">
+          <input type="password" id="signup-password" placeholder="Create password" autocomplete="new-password">
+          <button type="button" class="pw-toggle" data-target="signup-password">Show</button>
         </div>
-        <form class="auth-form" onsubmit="return false;">
-          <input type="email" id="email" placeholder="Email" autocomplete="email">
-          <input type="password" id="password" placeholder="Password" autocomplete="current-password">
-          <div class="btn-row">
-            <button type="button" class="btn-primary" id="auth-submit">Login</button>
-            <button type="button" class="btn-secondary" id="google-btn">Sign in with Google</button>
-          </div>
-        </form>
-      </section>
+      </div>
+      <div class="field-group signup-only">
+        <label for="confirm-password">Confirm Password</label>
+        <div class="password-field">
+          <input type="password" id="confirm-password" placeholder="Confirm password" autocomplete="new-password">
+          <button type="button" class="pw-toggle" data-target="confirm-password">Show</button>
+        </div>
+      </div>
+      <div class="field-group login-only">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Email" autocomplete="email">
+      </div>
+      <div class="field-group login-only">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+      </div>
+      <div class="auth-actions">
+        <button type="button" id="auth-submit" class="btn-primary">Login</button>
+        <button type="button" id="google-btn" class="btn-secondary">Sign in with Google</button>
+      </div>
+    </div>
+  </div>
+</section>
 
       <section class="profile-card" id="profile-container" style="display:none;">
 <h2>Your Account</h2>
@@ -44,7 +77,7 @@
 
   <script type="module">
     import { handleAuth, handleGoogleLogin, handleLogout } from './js/auth.js';
-    import { injectNavbar, injectFooter } from './js/main.js';
+    import { injectNavbar, injectFooter, enablePasswordToggles } from './js/main.js';
 
     let loginMode = true;
     const authSubmit = document.getElementById("auth-submit");
@@ -69,6 +102,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       injectNavbar();
       injectFooter();
+      enablePasswordToggles();
     });
   </script>
 </body>

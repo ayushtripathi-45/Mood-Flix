@@ -50,21 +50,33 @@ async function renderMoviesToDOM(items) {
     const year = (item.release_date || "2026").split("-")[0];
     const rating = await fetchMetaRating(item.title, year);
     const poster = item.poster_path ? `${CONFIG.TMDB_IMG}${item.poster_path}` : "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=400";
-    const card = document.createElement("div");
-    card.className = "media-card";
-    card.innerHTML = `
-      <img src="${poster}" alt="${item.title} Poster">
-      <div class="media-info">
-        <h4 class="media-title">${item.title}</h4>
-        <div class="card-meta">
-          <span>${year}</span>
-          <span class="rating-badge">★ ${rating}</span>
+      const card = document.createElement("div");
+      card.className = "media-card clickable-card";
+      // Set dataset attributes for modal details
+      card.dataset.type = "movie";
+      card.dataset.title = item.title;
+      card.dataset.year = year;
+      card.dataset.rating = rating;
+      card.dataset.poster = poster;
+      // Placeholder for additional details (cast, runtime, revenue, trailer)
+      card.dataset.cast = item.cast || "";
+      card.dataset.runtime = item.runtime || "";
+      card.dataset.revenue = item.revenue || "N/A";
+      card.dataset.trailer = item.trailer || "";
+
+      card.innerHTML = `
+        <img src="${poster}" alt="${item.title} Poster">
+        <div class="media-info">
+          <h4 class="media-title">${item.title}</h4>
+          <div class="card-meta">
+            <span>${year}</span>
+            <span class="rating-badge">★ ${rating}</span>
+          </div>
+          <button class="save-btn" type="button">Add to Watchlist</button>
         </div>
-        <button class="save-btn" type="button">Add to Watchlist</button>
-      </div>
-    `;
-    card.querySelector(".save-btn").onclick = () => saveToWatchlist(item.title, poster, "Movie");
-    target.appendChild(card);
+      `;
+      card.querySelector(".save-btn").onclick = () => saveToWatchlist(item.title, poster, "Movie");
+      target.appendChild(card);
   }
 }
 
@@ -81,7 +93,18 @@ async function renderSeriesToDOM(items) {
     const year = (item.first_air_date || "2026").split("-")[0];
     const poster = item.poster_path ? `${CONFIG.TMDB_IMG}${item.poster_path}` : "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=400";
     const card = document.createElement("div");
-    card.className = "media-card";
+    card.className = "media-card clickable-card";
+    // Set dataset attributes for modal details
+    card.dataset.type = "series";
+    card.dataset.title = item.name;
+    card.dataset.year = year;
+    card.dataset.poster = poster;
+    // Placeholder fields
+    card.dataset.cast = item.cast || "";
+    card.dataset.runtime = item.runtime || "";
+    card.dataset.revenue = item.revenue || "N/A";
+    card.dataset.trailer = item.trailer || "";
+
     card.innerHTML = `
       <img src="${poster}" alt="${item.name} Poster">
       <div class="media-info">
@@ -110,7 +133,14 @@ async function renderTracksToDOM(items) {
   for (const item of items) {
     const assetMeta = await searchDeezerPreviewAsset(item.artist.name, item.name);
     const card = document.createElement("div");
-    card.className = "track-card";
+    card.className = "track-card clickable-card";
+    // Set dataset attributes for modal details
+    card.dataset.type = "song";
+    card.dataset.title = item.name;
+    card.dataset.artist = item.artist.name;
+    card.dataset.album = item.album || "";
+    card.dataset.trailer = item.trailer || ""; // placeholder if any
+    card.dataset.poster = assetMeta.albumCover;
     card.innerHTML = `
       <img src="${assetMeta.albumCover}" alt="Album Cover">
       <div class="track-details">

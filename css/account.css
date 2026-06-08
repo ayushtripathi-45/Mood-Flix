@@ -113,6 +113,25 @@
   color: var(--text-primary);
 }
 
+/* Password field styling */
+.password-field {
+  display: flex;
+  align-items: center;
+}
+.password-field input {
+  flex: 1;
+}
+.password-field .pw-toggle {
+  margin-left: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  background: var(--glass-border);
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 4px;
+}
+
 .watchlist-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
