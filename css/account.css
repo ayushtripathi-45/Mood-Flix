@@ -104,6 +104,14 @@
   min-height: 100%;
 }
 
+/* Profile details styling */
+#profile-name,
+#profile-email {
+  margin: 0.4rem 0;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
 .watchlist-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));

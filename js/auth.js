@@ -66,6 +66,10 @@ onAuthStateChanged(auth, (user) => {
     if(authContainer) authContainer.style.display = "none";
     if(profileContainer) profileContainer.style.display = "block";
     fetchAndRenderWatchlist();
+    const nameEl = document.getElementById('profile-name');
+    const emailEl = document.getElementById('profile-email');
+    if (nameEl) nameEl.textContent = user.displayName ? `Name: ${user.displayName}` : '';
+    if (emailEl) emailEl.textContent = `Email: ${user.email || user.uid}`;
     if (typeof window.startQuizAfterAuth === "function") {
       window.startQuizAfterAuth();
     }
