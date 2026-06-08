@@ -53,12 +53,12 @@ export async function fetchTrending() {
   try {
     const data = await tmdbFetch('/trending/movie/week', { page: 1 });
     const results = (data.results || []).filter(item => item.poster_path).slice(0, 12);
-      return Promise.all(results.map(item => normalizeMovie(item)));
-    } catch (error) {
-      console.warn('TMDB trending failed, returning empty list.', error);
-      return [];
-    }
+    return Promise.all(results.map(item => normalizeMovie(item)));
+  } catch (error) {
+    console.warn('TMDB trending failed, returning empty list.', error);
+    return [];
   }
+}
 
   export async function fetchFeaturedMovies() {
     return fetchTrending();
