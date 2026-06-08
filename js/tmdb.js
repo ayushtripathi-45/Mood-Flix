@@ -53,37 +53,38 @@ export async function fetchTrending() {
   try {
     const data = await tmdbFetch('/trending/movie/week', { page: 1 });
     const results = (data.results || []).filter(item => item.poster_path).slice(0, 12);
-    return Promise.all(results.map(item => normalizeMovie(item)));
-  } catch (error) {
-    console.warn('TMDB trending failed, using fallback movies.', error);
-    return FALLBACK_MOVIES;
+      return Promise.all(results.map(item => normalizeMovie(item)));
+    } catch (error) {
+      console.warn('TMDB trending failed, returning empty list.', error);
+      return [];
+    }
   }
-}
 
-export async function fetchFeaturedMovies() {
-  return fetchTrending();
-}
-
-export async function discoverMediaByVibe(kind, mood, lang = "both") {
-  const genre = kind === "tv" ? TV_GENRES_BY_MOOD[mood] : MOVIE_GENRES_BY_MOOD[mood];
-  const language = lang === "hi" || lang === "en" ? lang : undefined;
-  const endpoint = kind === "tv" ? "/discover/tv" : "/discover/movie";
-
-  try {
-    const data = await tmdbFetch(endpoint, {
-      page: 1,
-      sort_by: "popularity.desc",
-      with_genres: genre,
-      with_original_language: language
-    });
-    const results = (data.results || []).filter(item => item.poster_path).slice(0, 10);
-    if (kind === "tv") return Promise.all(results.map(item => normalizeSeries(item)));
-    return Promise.all(results.map(item => normalizeMovie(item)));
-  } catch (error) {
-    console.warn(`TMDB ${kind} discovery failed, using fallback.`, error);
-    return kind === "tv" ? [] : FALLBACK_MOVIES;
+  export async function fetchFeaturedMovies() {
+    return fetchTrending();
   }
-}
+
+  export async function discoverMediaByVibe(kind, mood, lang = "both") {
+    const genre = kind === "tv" ? TV_GENRES_BY_MOOD[mood] : MOVIE_GENRES_BY_MOOD[mood];
+    const language = lang === "hi" || lang === "en" ? lang : undefined;
+    const endpoint = kind === "tv" ? "/discover/tv" : "/discover/movie";
+
+    try {
+      const data = await tmdbFetch(endpoint, {
+        page: 1,
+        sort_by: "popularity.desc",
+        with_genres: genre,
+        with_original_language: language
+      });
+      const results = (data.results || []).filter(item => item.poster_path).slice(0, 10);
+      if (kind === "tv") return Promise.all(results.map(item => normalizeSeries(item)));
+      return Promise.all(results.map(item => normalizeMovie(item)));
+    } catch (error) {
+      console.warn(`TMDB ${kind} discovery failed, returning empty list.`, error);
+      return [];
+    }
+  }
+
 
 export async function fetchMovieDetails(id, type = "movie") {
   if (!id || String(id).startsWith("fallback")) return null;
