@@ -6,12 +6,6 @@
 <img src="https://readme-typing-svg.demolab.com?font=Playfair+Display&weight=700&size=34&pause=1000&color=FF4D6D&center=true&vCenter=true&width=900&lines=Your+Mood.+Your+Vibe.+Your+Picks.;AI-Powered+Entertainment+Discovery.;Movies+%E2%80%A2+TV+Shows+%E2%80%A2+Music.;Stop+Scrolling.+Start+Feeling." alt="Typing SVG" />
 
 <br>
-
-<img src="https://img.shields.io/github/stars/ayushtripathi-45/mood-flix?style=for-the-badge&color=ff4d6d">
-<img src="https://img.shields.io/github/forks/ayushtripathi-45/mood-flix?style=for-the-badge&color=7b2cbf">
-<img src="https://img.shields.io/github/issues/ayushtripathi-45/mood-flix?style=for-the-badge&color=4361ee">
-<img src="https://img.shields.io/github/license/ayushtripathi-45/mood-flix?style=for-the-badge&color=06d6a0">
-
 <br><br>
 
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
