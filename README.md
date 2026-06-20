@@ -29,6 +29,7 @@
 </div>
 
 ---
+<img width="1350" height="639" alt="image" src="https://github.com/user-attachments/assets/228a4565-1fdb-441d-85ce-9dd76449aaa3" />
 
 # ✨ Overview
 
@@ -344,7 +345,8 @@ Expanded language recommendations globally.
 
 ## 🎬 MoodFlix Experience
 
-<img src="https://your-image-link.com/banner1.png" width="100%">
+<img width="1350" height="639" alt="image" src="https://github.com/user-attachments/assets/0ed0e9b7-d948-410c-ab75-e9d2c39f96a5" />
+
 
 <br><br>
 
