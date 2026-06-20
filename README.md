@@ -1,7 +1,7 @@
 
-<div align="center">
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=180&section=header&text=MoodFlix&fontSize=50&fontColor=ffffff&animation=fadeIn"/>
 
-# 🎬 MoodFlix
+<div align="center">
 
 <img src="https://readme-typing-svg.demolab.com?font=Playfair+Display&weight=700&size=34&pause=1000&color=FF4D6D&center=true&vCenter=true&width=900&lines=Your+Mood.+Your+Vibe.+Your+Picks.;AI-Powered+Entertainment+Discovery.;Movies+%E2%80%A2+TV+Shows+%E2%80%A2+Music.;Stop+Scrolling.+Start+Feeling." alt="Typing SVG" />
 
@@ -23,8 +23,6 @@
 ## 🔗 [Experience MoodFlix](https://movie-flix-a6cff.web.app)
 
 <br>
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=180&section=header&text=MoodFlix&fontSize=50&fontColor=ffffff&animation=fadeIn"/>
 
 </div>
 
@@ -357,21 +355,10 @@ Expanded language recommendations globally.
 
 ---
 
-# 🌍 Live Website
-
-<div align="center">
-
-# 🔗 https://movie-flix-a6cff.web.app/
-
-</div>
-
----
 
 # 👨‍💻 Developer
 
 <div align="center">
-
-<img src="https://avatars.githubusercontent.com/u/ayushtripathi-45?v=4" width="140" style="border-radius:50%">
 
 # Ayush Tripathi
 
@@ -384,47 +371,17 @@ Passionate about building immersive digital experiences through:
 * AI-Powered Applications
 * Performance-Driven Frontend Engineering
 
+</div>
+
 ---
 
 ## ⚡ Skills
 
-HTML5 • CSS3 • JavaScript • Firebase
+HTML5 • CSS3 • JavaScript • React.js • Firebase • Node.js
 
 UI/UX Design • API Integration • Responsive Design
 
 Frontend Engineering • Performance Optimization
-
----
-
-## 🌐 Connect With Me
-
-<a href="https://github.com/yourusername">
-<img src="https://img.shields.io/badge/GitHub-000000?style=for-the-badge&logo=github">
-</a>
-
-<a href="https://linkedin.com/in/yourprofile">
-<img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin">
-</a>
-
-<a href="https://twitter.com/yourprofile">
-<img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter">
-</a>
-
-</div>
-
----
-
-# 💡 Vision
-
-<div align="center">
-
-## 🎭 “Entertainment should understand emotions.”
-
-MoodFlix was built to transform entertainment discovery into a deeply personalized emotional experience.
-
-Instead of endlessly searching for what to watch or listen to, users simply express how they feel — and MoodFlix handles the rest.
-
-</div>
 
 ---
 
@@ -439,17 +396,6 @@ If you enjoyed this project:
 
 ---
 
-<div align="center">
-
-# 🎬 MoodFlix
-
-## Stop Scrolling. Start Feeling.
-
-Built with ❤️ using
-
-HTML • CSS • JavaScript • Firebase • TMDB • OMDB • Last.fm • Deezer
-
-<br>
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:24243e,50:302b63,100:0f0c29&height=140&section=footer"/>
 
