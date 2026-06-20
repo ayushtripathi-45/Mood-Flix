@@ -296,44 +296,35 @@ Delivering a seamless experience across all screen sizes.
 ---
 
 # 🚀 Future Enhancements
+ 
+ - 🤖 AI Chat Assistant
 
-## 🤖 AI Chat Assistant
+> Conversational entertainment recommendations.
 
-Conversational entertainment recommendations.
 
----
+ - 🎤 Voice Mood Detection
 
-## 🎤 Voice Mood Detection
+> Analyze mood through voice interactions.
 
-Analyze mood through voice interactions.
+ - 🎧 Spotify Integration
 
----
+> Real Spotify playback integration.
 
-## 🎧 Spotify Integration
+ - 📊 Mood Analytics
 
-Real Spotify playback integration.
+> Track entertainment trends over time.
 
----
+ - 🔔 Smart Notifications
 
-## 📊 Mood Analytics
+> Personalized recommendation alerts.
 
-Track entertainment trends over time.
+ - 📱 Progressive Web App
 
----
-
-## 🔔 Smart Notifications
-
-Personalized recommendation alerts.
+> Offline support + native app experience.
 
 ---
 
-## 📱 Progressive Web App
-
-Offline support + native app experience.
-
----
-
-## 🌐 Multi-Language Support
+ - 🌐 Multi-Language Support
 
 Expanded language recommendations globally.
 
@@ -350,11 +341,17 @@ Expanded language recommendations globally.
 
 <br><br>
 
-<img src="https://your-image-link.com/banner2.png" width="100%">
+<img width="1352" height="628" alt="image" src="https://github.com/user-attachments/assets/afe1ae33-555a-4433-b58b-e4e1f94b6fc7" />
+
 
 <br><br>
 
-<img src="https://your-image-link.com/banner3.png" width="100%">
+<img width="1346" height="626" alt="image" src="https://github.com/user-attachments/assets/1befb30b-7208-4b55-a2ff-4210a5ad1e3d" />
+
+<br><br>
+
+<img width="1352" height="629" alt="image" src="https://github.com/user-attachments/assets/d79b6466-ddc4-46c4-ad63-fe88a06a8a04" />
+
 
 </div>
 
@@ -374,7 +371,7 @@ Expanded language recommendations globally.
 
 <div align="center">
 
-<img src="https://avatars.githubusercontent.com/u/yourgithubid?v=4" width="140" style="border-radius:50%">
+<img src="https://avatars.githubusercontent.com/u/ayushtripathi-45?v=4" width="140" style="border-radius:50%">
 
 # Ayush Tripathi
 
